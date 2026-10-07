@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Bravo by Michal Avital — Homepage Redesign Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#000;
+  --paper:#fff;
+  --mist:#f4f4f2;
+  --stone:#e6e5e1;
+  --muted:#6b6b6b;
+  --tide:#24435a;           /* "Famous Blue Bag" accent */
+  --serif:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans:"Jost", "Futura", "Helvetica Neue", Arial, sans-serif;
+  --wrap:1440px;
+  --gut:clamp(16px,3vw,40px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--tide);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+.img-fallback{background:linear-gradient(135deg,var(--stone),var(--mist))}
+
+/* ---------- Top bar ---------- */
+.topbar{background:var(--ink);color:#fff;font-size:12.5px;letter-spacing:.02em}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:38px;gap:16px}
+.topbar .left,.topbar .right{display:flex;gap:22px;align-items:center}
+.topbar a:hover{opacity:.7}
+@media(max-width:720px){.topbar .left a:nth-child(2),.topbar .right a:first-child{display:none}}
+
+/* ---------- Header ---------- */
+header.site{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--stone)}
+.head-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84px}
+.head-left{display:flex;gap:26px;font-size:14px}
+.head-left a{position:relative;padding:4px 0}
+.head-left a::after,.mainnav > li > a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.head-left a:hover::after,.mainnav > li > a:hover::after{transform:scaleX(1)}
+.logo{text-align:center;line-height:1}
+.logo .mark{font-family:var(--serif);font-size:38px;letter-spacing:.32em;padding-left:.32em;font-weight:400}
+.logo .sub{display:block;font-size:11px;letter-spacing:.24em;margin-top:6px;color:var(--muted)}
+.head-right{display:flex;justify-content:flex-end;gap:20px;align-items:center}
+.icon-btn{position:relative;display:grid;place-items:center;width:34px;height:34px}
+.icon-btn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.4}
+.badge[hidden]{display:none}
+.badge{position:absolute;top:0;right:-2px;background:var(--ink);color:#fff;font-size:10px;min-width:17px;height:17px;border-radius:50%;display:grid;place-items:center}
+.burger{display:none}
+
+.navrow{border-top:1px solid var(--stone)}
+.mainnav{list-style:none;display:flex;justify-content:center;gap:42px;font-size:14px;font-weight:500;letter-spacing:.04em}
+.mainnav > li{position:relative}
+.mainnav > li > a{display:inline-block;padding:15px 0;position:relative}
+.mainnav > li > a::after{bottom:10px}
+.mega{position:absolute;left:50%;top:100%;transform:translate(-50%,8px);opacity:0;visibility:hidden;transition:.25s;background:#fff;border:1px solid var(--stone);box-shadow:0 18px 40px rgba(0,0,0,.08);display:grid;grid-template-columns:repeat(2,160px) 240px;gap:28px;padding:30px 34px;width:max-content}
+.has-mega:hover .mega,.has-mega:focus-within .mega{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.mega h4{font-family:var(--serif);font-weight:400;font-size:18px;margin-bottom:12px}
+.mega ul{list-style:none;display:grid;gap:7px;font-weight:400;color:var(--muted)}
+.mega ul a:hover{color:var(--ink)}
+.mega figure{position:relative;aspect-ratio:4/5;overflow:hidden}
+.mega figure img{width:100%;height:100%;object-fit:cover}
+.mega figcaption{position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--serif);font-size:20px;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+
+@media(max-width:960px){
+  .navrow{display:none}
+  .head-left a{display:none}
+  .burger{display:grid}
+  .head-row{height:68px}
+  .logo .mark{font-size:28px}
+  .head-right .hide-sm{display:none}
+}
+
+/* Drawer */
+.drawer{position:fixed;inset:0;z-index:80;visibility:hidden}
+.drawer.open{visibility:visible}
+.drawer .scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:.3s}
+.drawer.open .scrim{opacity:1}
+.drawer nav{position:absolute;left:0;top:0;bottom:0;width:min(340px,86vw);background:#fff;padding:28px;transform:translateX(-100%);transition:transform .35s ease;overflow:auto}
+.drawer.open nav{transform:none}
+.drawer nav a{display:block;padding:12px 0;border-bottom:1px solid var(--stone);font-size:16px}
+.drawer nav .close{float:right;font-size:28px;line-height:1}
+
+/* ---------- Hero: five tall panels ---------- */
+.hero{display:flex;height:min(78vh,760px);min-height:460px;gap:2px;background:#fff}
+.panel{position:relative;flex:1;overflow:hidden;transition:flex .6s cubic-bezier(.2,.7,.2,1)}
+.panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.panel::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 45%)}
+.panel .cap{position:absolute;left:24px;right:24px;bottom:26px;z-index:2;color:#fff}
+.panel .cap h2{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.2vw,34px);line-height:1.1}
+.panel .cap span{display:inline-block;margin-top:10px;font-size:13px;letter-spacing:.08em;border-bottom:1px solid #fff;padding-bottom:2px;opacity:0;transform:translateY(8px);transition:.4s}
+.hero:hover .panel{flex:.8}
+.hero .panel:hover{flex:1.8}
+.panel:hover img{transform:scale(1.04)}
+.panel:hover .cap span,.panel:focus-visible .cap span{opacity:1;transform:none}
+@media(max-width:820px){
+  .hero{height:auto;min-height:0;overflow-x:auto;scroll-snap-type:x mandatory}
+  .panel{flex:0 0 72vw;height:68vh;scroll-snap-align:start}
+  .hero:hover .panel,.hero .panel:hover{flex:0 0 72vw}
+  .panel .cap span{opacity:1;transform:none}
+}
+
+/* ---------- Marquee ---------- */
+.marquee{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:14px 0}
+.marquee .track{display:inline-flex;gap:56px;animation:slide 32s linear infinite;font-family:var(--serif);font-style:italic;font-size:19px}
+.marquee .track span::after{content:"✦";font-style:normal;font-size:11px;margin-left:56px;vertical-align:middle}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- Section heads ---------- */
+section.block{padding:clamp(56px,7vw,96px) 0}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:36px}
+.sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,48px);line-height:1.05}
+.sec-head p{color:var(--muted);max-width:44ch;margin-top:8px}
+.link-u{font-size:14px;font-weight:500;border-bottom:1px solid currentColor;padding-bottom:2px;white-space:nowrap}
+.link-u:hover{color:var(--tide)}
+
+/* ---------- Categories ---------- */
+.cats{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.cat{display:block;text-align:center}
+.cat .ph{aspect-ratio:3/4;overflow:hidden;margin-bottom:14px}
+.cat img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.cat:hover img{transform:scale(1.05)}
+.cat h3{font-family:var(--serif);font-weight:400;font-size:22px}
+.cat small{color:var(--muted);font-size:13px}
+@media(max-width:900px){.cats{grid-template-columns:repeat(5,62vw);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.cat{scroll-snap-align:start}}
+
+/* ---------- Product cards ---------- */
+.carousel-wrap{position:relative}
+.carousel{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*24px)/4);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}
+.carousel::-webkit-scrollbar{display:none}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 24px}
+@media(max-width:1000px){.carousel{grid-auto-columns:calc((100% - 24px)/2)}.grid4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.carousel{grid-auto-columns:78%}.grid4{gap:28px 14px}}
+.arrows{display:flex;gap:8px}
+.arrows button{width:44px;height:44px;border:1px solid var(--ink);display:grid;place-items:center;transition:.2s}
+.arrows button:hover{background:var(--ink);color:#fff}
+.arrows svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+.card{scroll-snap-align:start}
+.card .media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--mist)}
+.card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .5s ease,transform 1s ease}
+.card .media img.alt{opacity:0}
+.card:hover .media img.alt{opacity:1}
+.card:hover .media img.main{transform:scale(1.03)}
+.card .tag{position:absolute;top:12px;left:12px;background:#fff;font-size:11.5px;font-weight:500;padding:4px 10px;z-index:2}
+.card .tag.new{background:var(--tide);color:#fff}
+.card .tools{position:absolute;top:12px;right:12px;display:grid;gap:8px;z-index:2}
+.card .tools button{width:36px;height:36px;background:#fff;border-radius:50%;display:grid;place-items:center;opacity:0;transform:translateX(10px);transition:.3s}
+.card:hover .tools button,.card .tools button:focus-visible,.card .tools button.on{opacity:1;transform:none}
+.card .tools svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:1.5}
+.card .tools button.on svg{fill:var(--ink)}
+.card .add{position:absolute;left:12px;right:12px;bottom:12px;background:var(--ink);color:#fff;padding:12px;font-size:13px;font-weight:500;letter-spacing:.04em;z-index:2;opacity:0;transform:translateY(10px);transition:.3s}
+.card:hover .add,.card .add:focus-visible{opacity:1;transform:none}
+.card .add:hover{background:var(--tide)}
+.card .info{padding-top:14px}
+.card .brand{font-size:12px;color:var(--muted)}
+.card h3{font-weight:400;font-size:15.5px;line-height:1.35;margin:2px 0 4px}
+.card h3 a:hover{text-decoration:underline;text-underline-offset:3px}
+.card .price{font-weight:500}
+@media(hover:none){.card .tools button,.card .add{opacity:1;transform:none}}
+
+/* Tabs */
+.tabs{display:flex;gap:28px;border-bottom:1px solid var(--stone);margin-bottom:36px;overflow-x:auto}
+.tabs button{padding:0 0 12px;font-size:15px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--ink)}
+
+/* ---------- Famous bag split banner ---------- */
+.split{display:grid;grid-template-columns:1.1fr 1fr;min-height:620px;background:var(--tide);color:#fff}
+.split .img{position:relative;overflow:hidden}
+.split .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.split .txt{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,96px)}
+.split .txt .kick{font-size:13px;letter-spacing:.08em;opacity:.8;margin-bottom:18px}
+.split .txt h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5.6vw,84px);line-height:.98;margin-bottom:24px}
+.split .txt p{max-width:42ch;opacity:.88;margin-bottom:34px}
+.btn{display:inline-block;padding:15px 34px;font-size:13.5px;font-weight:500;letter-spacing:.06em;border:1px solid currentColor;transition:.25s;align-self:flex-start}
+.btn.light{background:#fff;color:var(--ink);border-color:#fff}
+.btn.light:hover{background:transparent;color:#fff}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.dark:hover{background:#fff;color:var(--ink)}
+@media(max-width:860px){.split{grid-template-columns:1fr}.split .img{aspect-ratio:4/3}}
+
+/* ---------- Duo banners ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.duo a{position:relative;display:block;aspect-ratio:5/6;overflow:hidden}
+.duo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s ease}
+.duo a:hover img{transform:scale(1.04)}
+.duo .lbl{position:absolute;left:0;right:0;bottom:0;padding:34px;color:#fff;background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
+.duo .lbl h3{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3vw,44px);line-height:1.05}
+.duo .lbl span{display:inline-block;margin-top:12px;font-size:13.5px;border-bottom:1px solid #fff;padding-bottom:2px}
+@media(max-width:700px){.duo{grid-template-columns:1fr}}
+
+/* ---------- Story ---------- */
+.story{background:var(--mist)}
+.story-grid{display:grid;grid-template-columns:5fr 6fr;gap:clamp(32px,6vw,96px);align-items:center}
+.story-imgs{position:relative;padding-bottom:18%}
+.story-imgs img{width:78%;aspect-ratio:4/5;object-fit:cover}
+.story-imgs img + img{position:absolute;right:0;bottom:0;width:52%;border:10px solid var(--mist)}
+.story .quote{font-family:var(--serif);font-style:italic;font-size:clamp(24px,2.4vw,34px);line-height:1.25;margin:0 0 26px}
+.story p{color:#3c3c3c;max-width:60ch;margin-bottom:18px}
+.story .sig{font-family:var(--serif);font-size:20px;margin:28px 0}
+@media(max-width:860px){.story-grid{grid-template-columns:1fr}}
+
+/* ---------- Styling steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.step{padding:30px 32px 10px 0}
+.step + .step{padding-left:32px;border-left:1px solid var(--stone)}
+.step .n{font-family:var(--serif);font-size:56px;line-height:1;margin-bottom:18px}
+.step h3{font-weight:500;font-size:18px;margin-bottom:8px}
+.step p{color:var(--muted);max-width:34ch}
+@media(max-width:800px){.steps{grid-template-columns:1fr}.step,.step+.step{padding:26px 0;border-left:0;border-bottom:1px solid var(--stone)}}
+
+/* ---------- Gallery ---------- */
+.gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.gallery a{position:relative;aspect-ratio:1;overflow:hidden}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.gallery a::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,0);transition:.3s}
+.gallery a:hover::after{background:rgba(0,0,0,.25)}
+.gallery a:hover img{transform:scale(1.06)}
+@media(max-width:800px){.gallery{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- Lookbook ---------- */
+.lookbook{columns:4 260px;column-gap:16px}
+.lookbook a{display:block;break-inside:avoid;margin-bottom:16px;overflow:hidden;position:relative;min-height:120px}
+.lookbook img{width:100%;height:auto;transition:transform .8s ease}
+.lookbook a:hover img{transform:scale(1.03)}
+.lb-more{display:flex;justify-content:center;margin-top:28px}
+
+/* ---------- Visit + contact ---------- */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px)}
+.visit h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,48px);line-height:1.05;margin-bottom:18px}
+.visit .addr{font-size:17px;margin:22px 0 28px;line-height:1.7}
+form.contact{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+form.contact .full{grid-column:1/-1}
+form.contact label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+form.contact input,form.contact textarea{width:100%;border:0;border-bottom:1px solid #bdbdbd;padding:10px 0;font:inherit;background:transparent;border-radius:0}
+form.contact input:focus,form.contact textarea:focus{outline:none;border-color:var(--ink)}
+form.contact textarea{min-height:110px;resize:vertical}
+.formmsg{grid-column:1/-1;font-size:14px;color:var(--tide);min-height:1.4em}
+@media(max-width:800px){.visit,form.contact{grid-template-columns:1fr}}
+
+/* ---------- Newsletter ---------- */
+.news{background:var(--ink);color:#fff;text-align:center}
+.news h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.6vw,52px);line-height:1.05;margin-bottom:12px}
+.news p{opacity:.75;margin-bottom:30px}
+.news form{display:flex;max-width:520px;margin:0 auto;border-bottom:1px solid #fff}
+.news input{flex:1;background:transparent;border:0;color:#fff;font:inherit;padding:14px 0}
+.news input::placeholder{color:rgba(255,255,255,.55)}
+.news input:focus{outline:none}
+.news button{font-weight:500;letter-spacing:.06em;font-size:13.5px;padding:0 4px}
+
+/* ---------- Footer ---------- */
+footer{background:#fff;border-top:1px solid var(--stone);padding:70px 0 28px;font-size:14px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+footer h4{font-weight:500;font-size:14px;margin-bottom:16px}
+footer ul{list-style:none;display:grid;gap:9px;color:var(--muted)}
+footer ul a:hover{color:var(--ink)}
+footer .logo{text-align:left}
+footer .logo .mark{font-size:30px;padding-left:0}
+footer .about{color:var(--muted);margin-top:18px;max-width:34ch}
+.fbottom{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--stone);color:var(--muted);font-size:13px}
+.pay{display:flex;gap:6px;flex-wrap:wrap}
+.pay span{border:1px solid var(--stone);padding:3px 8px;font-size:11.5px;color:#444}
+@media(max-width:860px){.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.fgrid{grid-template-columns:1fr}}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:14px 22px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:90}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Mockup note */
+.note{background:#fffbe6;border-bottom:1px solid #efe3a6;font-size:12.5px;text-align:center;padding:7px 16px;color:#5c5326}
+
+
+/* ================= MOBILE APP LAYER ================= */
+html{-webkit-tap-highlight-color:transparent}
+.stories,.hero-dots,.tabbar,.only-m{display:none}
+
+/* Bottom sheets (all sizes; full app feel on mobile) */
+.sheet{position:fixed;inset:0;z-index:120;visibility:hidden}
+.sheet.open{visibility:visible}
+.sheet .sbg{position:absolute;inset:0;background:rgba(0,0,0,.42);opacity:0;transition:opacity .3s}
+.sheet.open .sbg{opacity:1}
+.sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:88vh;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .38s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet.open .sheet-panel{transform:none}
+.sheet-panel.dragging{transition:none}
+@media(min-width:821px){.sheet-panel{left:auto;top:0;bottom:0;width:420px;max-height:none;border-radius:0;transform:translateX(100%)}}
+.grab{width:42px;height:5px;border-radius:5px;background:#d7d7d7;margin:10px auto 2px;flex:none}
+@media(min-width:821px){.grab{display:none}}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 14px;border-bottom:1px solid var(--stone);flex:none;touch-action:none}
+.sheet-head h3{font-family:var(--serif);font-weight:400;font-size:24px}
+.sheet-head .x{width:36px;height:36px;border-radius:50%;background:var(--mist);font-size:22px;line-height:1}
+.sheet-body{overflow:auto;padding:18px 20px;flex:1;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.sheet-foot{flex:none;padding:14px 20px;border-top:1px solid var(--stone)}
+.sheet-foot .row{display:flex;justify-content:space-between;font-weight:500;margin-bottom:12px}
+.btn-block{display:block;width:100%;text-align:center;background:var(--ink);color:#fff;padding:16px;border-radius:12px;font-weight:500;letter-spacing:.04em}
+.btn-block:disabled{opacity:.35}
+.search-field{display:flex;align-items:center;gap:10px;background:var(--mist);border-radius:12px;padding:0 14px}
+.search-field svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:1.6;flex:none}
+.search-field input{flex:1;border:0;background:transparent;font:inherit;font-size:16px;padding:14px 0}
+.search-field input:focus{outline:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 22px}
+.chip{border:1px solid var(--stone);border-radius:999px;padding:7px 14px;font-size:13.5px}
+.chip.on,.chip:active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.s-label{font-size:13px;color:var(--muted);margin-bottom:10px}
+.li{display:flex;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--mist)}
+.li .th{width:64px;height:80px;border-radius:10px;overflow:hidden;background:var(--mist);flex:none}
+.li .th img{width:100%;height:100%;object-fit:cover}
+.li .meta{flex:1;min-width:0}
+.li .meta b{display:block;font-weight:400;font-size:14.5px;line-height:1.3}
+.li .meta span{font-size:13.5px;color:var(--muted)}
+.qty{display:flex;align-items:center;border:1px solid var(--stone);border-radius:999px}
+.qty button{width:32px;height:32px;font-size:17px}
+.qty span{min-width:18px;text-align:center;font-size:14px}
+.empty{text-align:center;padding:40px 10px;color:var(--muted)}
+.empty svg{width:46px;height:46px;stroke:var(--ink);fill:none;stroke-width:1.2;margin:0 auto 14px}
+.empty b{display:block;color:var(--ink);font-weight:500;font-size:17px;margin-bottom:6px}
+.shop-list a{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--mist);font-size:17px}
+.shop-list a::after{content:"›";font-size:24px;color:var(--muted);line-height:1}
+.qv-imgs{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:0 20px;scrollbar-width:none}
+.qv-imgs::-webkit-scrollbar{display:none}
+.qv-imgs img{flex:0 0 78%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;scroll-snap-align:center;background:var(--mist)}
+.qv-name{font-family:var(--serif);font-size:24px;line-height:1.15;margin:18px 0 4px}
+.qv-price{font-weight:500;font-size:17px;margin-bottom:18px}
+.sizes{display:flex;gap:8px;margin:8px 0 6px}
+.sizes button{flex:1;border:1px solid var(--stone);border-radius:10px;padding:11px 0;font-size:14px}
+.sizes button.on{border-color:var(--ink);background:var(--ink);color:#fff}
+
+@media(max-width:820px){
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px));overscroll-behavior-y:none}
+  .topbar,.note{display:none}
+  .only-m{display:block}
+
+  /* compact header that hides on scroll down */
+  header.site{transition:transform .32s ease;padding-top:env(safe-area-inset-top,0px)}
+  header.site.hide{transform:translateY(-100%)}
+  .head-row{height:56px}
+  .logo .mark{font-size:23px;letter-spacing:.26em;padding-left:.26em}
+  .logo .sub{font-size:9px;margin-top:3px;letter-spacing:.2em}
+  .icon-btn{width:40px;height:40px}
+
+  /* story circles */
+  .stories{display:flex;gap:14px;overflow-x:auto;padding:14px 16px 12px;scroll-padding:0 16px;scrollbar-width:none;scroll-snap-type:x proximity}
+  .stories::-webkit-scrollbar{display:none}
+  .story-c{flex:none;width:68px;text-align:center;font-size:11.5px;scroll-snap-align:start}
+  .story-c .ring{width:68px;height:68px;border-radius:50%;padding:2.5px;background:conic-gradient(var(--tide),#9bb3c4,var(--ink),var(--tide));margin-bottom:6px}
+  .story-c .ring.seen{background:var(--stone)}
+  .story-c .ring span{display:block;width:100%;height:100%;border-radius:50%;border:2.5px solid #fff;overflow:hidden;background:var(--mist)}
+  .story-c img{width:100%;height:100%;object-fit:cover}
+
+  /* hero becomes a swipe carousel of rounded cards */
+  .hero{height:auto;min-height:0;gap:10px;padding:0 16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 16px;scrollbar-width:none}
+  .hero::-webkit-scrollbar{display:none}
+  .panel,.hero:hover .panel,.hero .panel:hover{flex:0 0 calc(100vw - 48px);height:min(68vh,560px);border-radius:18px;scroll-snap-align:start}
+  .panel:hover img{transform:none}
+  .panel .cap{left:20px;bottom:22px}
+  .panel .cap h2{font-size:30px}
+  .hero-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 4px}
+  .hero-dots i{width:6px;height:6px;border-radius:6px;background:#cfcfcf;transition:width .3s,background .3s}
+  .hero-dots i.on{width:20px;background:var(--ink)}
+
+  .marquee{padding:10px 0;margin-top:14px}
+  .marquee .track{font-size:15px;gap:36px}
+  .marquee .track span::after{margin-left:36px}
+
+  section.block{padding:40px 0}
+  .sec-head{margin-bottom:20px;align-items:center}
+  .sec-head h2{font-size:27px}
+  .sec-head p{font-size:13.5px;margin-top:4px}
+  .arrows{display:none}
+  .link-u{font-size:13px}
+
+  /* edge-to-edge swipe rows */
+  .carousel,.cats{margin:0 calc(-1 * var(--gut));padding:0 var(--gut);scroll-padding:0 var(--gut);gap:12px}
+  .carousel{grid-auto-columns:calc(50vw - 22px)}
+  .cats{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:40vw;overflow-x:auto;scrollbar-width:none}
+  .cats::-webkit-scrollbar{display:none}
+  .cat .ph{border-radius:14px;margin-bottom:8px}
+  .cat h3{font-size:17px}
+  .cat small{display:none}
+
+  /* product cards, touch-first */
+  .card .media{border-radius:14px}
+  .card .tag{top:8px;left:8px;border-radius:999px;font-size:10.5px;padding:3px 9px}
+  .card .tools{top:8px;right:8px;gap:6px}
+  .card .tools button{width:32px;height:32px;opacity:1;transform:none;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  .card .tools svg{width:14px;height:14px}
+  .card .add{left:auto;right:8px;bottom:8px;width:38px;height:38px;padding:0;border-radius:50%;display:grid;place-items:center;opacity:1;transform:none;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+  .card .add .t{display:none}
+  .card button.add svg{display:block}
+  .card .media img.alt{display:none}
+  .card .info{padding-top:9px}
+  .card .brand{display:none}
+  .card h3{font-size:13.5px}
+  .card .price{font-size:13.5px}
+  .grid4{gap:22px 12px}
+
+  /* sticky pill tabs */
+  .tabs{position:sticky;top:0;z-index:20;background:#fff;border:0;gap:8px;margin:0 calc(-1 * var(--gut)) 18px;padding:10px var(--gut);scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{border:1px solid var(--stone);border-radius:999px;padding:8px 16px;margin:0;font-size:13.5px;color:var(--ink)}
+  .tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .split{margin:0 16px;border-radius:18px;overflow:hidden;min-height:0}
+  .split .img{aspect-ratio:1}
+  .split .txt{padding:30px 24px 34px}
+  .split .txt h2{font-size:42px}
+  .duo{gap:12px}
+  .duo a{border-radius:18px;aspect-ratio:4/5}
+  .duo .lbl{padding:22px}
+  .btn{border-radius:12px;padding:15px 26px}
+
+  .story-imgs img{border-radius:16px}
+  .story-imgs img + img{border-radius:16px}
+  .step .n{font-size:42px}
+  .lookbook{columns:2;column-gap:8px}
+  .lookbook a{margin-bottom:8px;border-radius:12px}
+  .lb-more .btn{width:100%;text-align:center}
+  .gallery{grid-template-columns:repeat(3,1fr);gap:2px}
+
+  form.contact input,form.contact textarea{font-size:16px}
+  .news form{border:0;flex-direction:column;gap:10px}
+  .news input{background:rgba(255,255,255,.1);border-radius:12px;padding:15px 16px;font-size:16px}
+  .news button{background:#fff;color:var(--ink);border-radius:12px;padding:15px}
+
+  /* footer accordion */
+  footer{padding:40px 0 20px}
+  .fgrid{grid-template-columns:1fr;gap:0}
+  .fgrid > div:first-child{margin-bottom:22px}
+  .fgrid > div + div{border-bottom:1px solid var(--stone)}
+  .fgrid > div + div h4{display:flex;justify-content:space-between;align-items:center;margin:0;padding:16px 0;cursor:pointer;font-size:15px}
+  .fgrid > div + div h4::after{content:"+";font-size:20px;font-weight:300;transition:transform .25s}
+  .fgrid > div.open h4::after{transform:rotate(45deg)}
+  .fgrid > div + div ul{display:none;padding-bottom:16px}
+  .fgrid > div.open ul{display:grid}
+  .fbottom{margin-top:26px;flex-direction:column;align-items:flex-start}
+
+  .toast{bottom:calc(80px + env(safe-area-inset-bottom,0px));border-radius:12px;width:max-content;max-width:calc(100vw - 32px)}
+
+  /* bottom tab bar */
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:100;background:rgba(255,255,255,.94);-webkit-backdrop-filter:saturate(1.6) blur(14px);backdrop-filter:saturate(1.6) blur(14px);border-top:1px solid var(--stone);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .tabbar button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 8px;font-size:10.5px;color:var(--muted);position:relative}
+  .tabbar svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.5}
+  .tabbar button.on{color:var(--ink)}
+  .tabbar button.on svg{stroke-width:1.9}
+  .tabbar .badge{top:4px;right:calc(50% - 20px)}
+  .bump{animation:bump .45s ease}
+}
+@keyframes bump{30%{transform:scale(1.3)}60%{transform:scale(.92)}}
+.card .add svg{display:none;width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.8}
+@media(hover:none){
+  button:active,.btn:active,.chip:active,.cat:active,.panel:active,.duo a:active{transform:scale(.97);transition:transform .1s}
+}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<script>
+/* Drive images: try lh3 first, then Drive thumbnail, then a neutral placeholder */
+function driveErr(el){
+  const m = el.src.match(/\/d\/([^=]+)=/);
+  if(m && !el.dataset.fb){ el.dataset.fb=1; el.src="https://drive.google.com/thumbnail?id="+m[1]+"&sz=w1200"; return; }
+  if(el.parentNode) el.parentNode.classList.add("img-fallback");
+  el.style.visibility="hidden";
+}
+</script>
+</head>
+<body>
+
+<div class="note">Design mockup for review. Product names and prices from bravomalibu.com. Photography from bravomalibu.com and the Bravo Google Drive folder.</div>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="left">
+      <a href="#visit">158 S. Beverly Drive, Beverly Hills</a>
+      <a href="#visit">Book a personal styling session</a>
+    </div>
+    <div class="right">
+      <a href="https://www.instagram.com/bravomalibu/">Instagram</a>
+      <a href="#">United States (USD $)</a>
+      <a href="#">Log in</a>
+    </div>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap head-row">
+    <div class="head-left">
+      <button class="icon-btn burger" aria-label="Open menu" id="openDrawer">
+        <svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+      </button>
+      <a href="#new">New In</a>
+      <a href="#cats">Dresses</a>
+      <a href="#bag">Bags</a>
+    </div>
+    <a class="logo" href="#" aria-label="Bravo by Michal Avital home">
+      <span class="mark">BRAVO</span>
+      <span class="sub">by Michal Avital</span>
+    </a>
+    <div class="head-right">
+      <button class="icon-btn" aria-label="Search" data-sheet="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <a class="icon-btn hide-sm" href="#" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
+      <a class="icon-btn hide-sm" href="#" aria-label="Wishlist"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge" id="wishCount">0</span></a>
+      <a class="icon-btn" href="#" aria-label="Bag" data-sheet="cart"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></a>
+    </div>
+  </div>
+  <nav class="navrow" aria-label="Main">
+    <ul class="mainnav">
+      <li><a href="#">Home</a></li>
+      <li class="has-mega">
+        <a href="#cats">Shop</a>
+        <div class="mega">
+          <div>
+            <h4>Clothing</h4>
+            <ul>
+              <li><a href="#">Dresses</a></li>
+              <li><a href="#">Tops</a></li>
+              <li><a href="#">Blouses</a></li>
+              <li><a href="#">Basics</a></li>
+              <li><a href="#">Bottoms</a></li>
+              <li><a href="#">Jackets</a></li>
+              <li><a href="#">Intimates</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>More</h4>
+            <ul>
+              <li><a href="#">Bags</a></li>
+              <li><a href="#">Accessories</a></li>
+              <li><a href="#">Gifts</a></li>
+              <li><a href="#">Sale</a></li>
+              <li><a href="#">View all</a></li>
+            </ul>
+          </div>
+          <figure>
+            <img src="https://lh3.googleusercontent.com/d/1KWWAtiK7dOAGTwGgDSf_gRsl68-aicqs=w700" alt="Bravo new season look" onerror="driveErr(this)">
+            <figcaption>New season</figcaption>
+          </figure>
+        </div>
+      </li>
+      <li><a href="#bag">The Famous Bag</a></li>
+      <li><a href="#story">Who We Are</a></li>
+      <li><a href="#visit">Contact Us</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="scrim" data-close></div>
+  <nav aria-label="Mobile">
+    <button class="close" data-close aria-label="Close menu">×</button>
+    <div style="clear:both;height:12px"></div>
+    <a href="#new" data-close>New In</a>
+    <a href="#cats" data-close>Shop by category</a>
+    <a href="#bag" data-close>The Famous Bag</a>
+    <a href="#story" data-close>Who We Are</a>
+    <a href="#visit" data-close>Contact Us</a>
+    <a href="#" data-close>Log in</a>
+  </nav>
+</div>
+
+<main>
+  <nav class="stories" id="stories" aria-label="Quick categories"></nav>
+  <!-- HERO -->
+  <section class="hero" aria-label="Featured collections">
+    <a class="panel" href="#cats"><img src="https://bravomalibu.com/cdn/shop/files/banner.webp?v=1728375442&width=1200" alt="Bravo coastal look" onerror="this.parentNode.classList.add('img-fallback');this.remove()"><div class="cap"><h2>Elevate your wardrobe</h2><span>Explore now</span></div></a>
+    <a class="panel" href="#cats"><img src="https://lh3.googleusercontent.com/d/1Ny3D2p0nAIHs_40cCm-VkvHzSfx9gkRp=w1200" alt="Dresses" onerror="driveErr(this)"><div class="cap"><h2>Dresses</h2><span>Shop dresses</span></div></a>
+    <a class="panel" href="#cats"><img src="https://lh3.googleusercontent.com/d/1L7w7E2d8glqRBA3OxErxFfVCLqkvszYV=w1200" alt="Blouses" onerror="driveErr(this)"><div class="cap"><h2>Blouses</h2><span>Shop blouses</span></div></a>
+    <a class="panel" href="#bag"><img src="https://lh3.googleusercontent.com/d/1m--t4RTtsmz-SCsuB6Y9gtPDuJRQYa3m=w1200" alt="The Famous Bag" onerror="driveErr(this)"><div class="cap"><h2>The Famous Bag</h2><span>Discover it</span></div></a>
+    <a class="panel" href="#cats"><img src="https://lh3.googleusercontent.com/d/1jtWOPDOBE7dbTAJPUFH6nTGtuW0jf8xe=w1200" alt="Jackets" onerror="driveErr(this)"><div class="cap"><h2>Jackets</h2><span>Shop jackets</span></div></a>
+  </section>
+  <div class="hero-dots" id="heroDots" aria-hidden="true"></div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track" id="marquee"></div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="block" id="cats">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>Shop by category</h2>
+          <p>Elevated staples and delicate details, from Malibu mornings to Beverly Hills evenings.</p>
+        </div>
+        <a class="link-u" href="#">View all</a>
+      </div>
+      <div class="cats" id="catGrid"></div>
+    </div>
+  </section>
+
+  <!-- MOST POPULAR -->
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2>Most popular</h2><p>The pieces our clients come back for.</p></div>
+        <div class="arrows">
+          <button aria-label="Previous" data-scroll="-1"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button aria-label="Next" data-scroll="1"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+      <div class="carousel" id="popular"></div>
+    </div>
+  </section>
+
+  <!-- FAMOUS BAG -->
+  <section class="split" id="bag">
+    <div class="img"><img src="https://bravomalibu.com/cdn/shop/files/5.webp?v=1728378401&width=1400" alt="The Famous Blue Bag" onerror="this.parentNode.classList.add('img-fallback');this.remove()"></div>
+    <div class="txt">
+      <div class="kick">Signature piece</div>
+      <h2>The Famous Bag</h2>
+      <p>The bag our clients ask for by name. Spacious, beach-to-dinner ready, and instantly recognizable on Beverly Drive.</p>
+      <a class="btn light" href="#">Shop the Famous Bag</a>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS w/ tabs -->
+  <section class="block" id="new">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>New arrivals</h2>
+        <a class="link-u" href="#">Shop all new</a>
+      </div>
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="all">All</button>
+        <button role="tab" aria-selected="false" data-tab="blouses">Blouses</button>
+        <button role="tab" aria-selected="false" data-tab="tops">Tops</button>
+        <button role="tab" aria-selected="false" data-tab="bottoms">Bottoms</button>
+      </div>
+      <div class="grid4" id="arrivals"></div>
+    </div>
+  </section>
+
+  <!-- DUO BANNERS -->
+  <section class="block" style="padding-top:0">
+    <div class="wrap duo">
+      <a href="#"><img src="https://bravomalibu.com/cdn/shop/files/1.webp?v=1727695471&width=1200" alt="Italian-made essentials" onerror="this.parentNode.classList.add('img-fallback');this.remove()"><div class="lbl"><h3>Italian craft,<br>coastal ease</h3><span>Shop the edit</span></div></a>
+      <a href="#"><img src="https://bravomalibu.com/cdn/shop/files/2.webp?v=1727695551&width=1200" alt="Gifts" onerror="this.parentNode.classList.add('img-fallback');this.remove()"><div class="lbl"><h3>Gifts she'll<br>actually wear</h3><span>Shop gifts</span></div></a>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="block story" id="story">
+    <div class="wrap story-grid">
+      <div class="story-imgs">
+        <img src="https://lh3.googleusercontent.com/d/1LxJObJxWO0Fbpk9w2mpy2Z1L5nGBwD8N=w1000" alt="Michal Avital styling" onerror="driveErr(this)">
+        <img src="https://lh3.googleusercontent.com/d/1v7p1GXTWlTodgKl_nqpTkVFTgdXf7rnT=w800" alt="Bravo boutique detail" onerror="driveErr(this)">
+      </div>
+      <div>
+        <h2 class="sec-head" style="display:block;margin-bottom:22px"><span style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,48px)">Our story</span></h2>
+        <p class="quote">“Fashion is what you buy, style is what you do with it.”</p>
+        <p>Bravo Malibu began in 2015 when Michal Avital started importing jewelry from Israel. It grew into a curated blend of bohemian chic, urban flair and laid-back California style, now one of the best-loved boutiques in Greater Los Angeles and Malibu.</p>
+        <p>Our mission is to pair the sophistication of high-end Italian fashion with the easy charm of coastal living, at prices that stay within reach.</p>
+        <div class="sig">Michal Avital, founder</div>
+        <a class="btn dark" href="#">Read who we are</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STYLING STEPS -->
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2>Personal styling, in person</h2><p>See us at the boutique for a one-on-one session with our stylists.</p></div>
+        <a class="link-u" href="#visit">Book a session</a>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>Call or message us</h3><p>Tell us the occasion, your size and the pieces you already love.</p></div>
+        <div class="step"><div class="n">2</div><h3>Visit Beverly Drive</h3><p>Your stylist pulls looks before you arrive, so the fitting room is ready.</p></div>
+        <div class="step"><div class="n">3</div><h3>Leave with complete looks</h3><p>Try everything together and take home outfits styled head to toe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOOKBOOK -->
+  <section class="block" id="lookbook" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2>The lookbook</h2><p>This season, styled by Michal at the boutique.</p></div>
+        <a class="link-u" href="#">Shop the looks</a>
+      </div>
+      <div class="lookbook" id="lookbookGrid"></div>
+      <div class="lb-more"><button class="btn dark" id="lbMore">Show more looks</button></div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2>@bravomalibu</h2><p>Real looks from our clients and our stylists.</p></div>
+        <a class="link-u" href="https://www.instagram.com/bravomalibu/">Follow on Instagram</a>
+      </div>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <!-- VISIT + CONTACT -->
+  <section class="block story" id="visit">
+    <div class="wrap visit">
+      <div>
+        <h2>Better yet, see us in person</h2>
+        <p style="color:#3c3c3c;max-width:44ch">We love meeting our customers. Call to schedule a personal shopping and styling appointment.</p>
+        <div class="addr">158 S. Beverly Drive<br>Beverly Hills, CA 90210</div>
+        <a class="btn dark" href="https://maps.app.goo.gl/ZPWMWd4N5RVzx9r58">Get directions</a>
+      </div>
+      <form class="contact" id="contactForm" novalidate>
+        <div><label for="n">Name</label><input id="n" name="name" autocomplete="name"></div>
+        <div><label for="e">Email</label><input id="e" name="email" type="email" required autocomplete="email"></div>
+        <div class="full"><label for="p">Phone number</label><input id="p" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="full"><label for="c">Comment</label><textarea id="c" name="comment"></textarea></div>
+        <div class="full"><button class="btn dark" type="submit">Send message</button></div>
+        <div class="formmsg" id="formMsg" role="status"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="block news">
+    <div class="wrap">
+      <h2>Join the Bravo list</h2>
+      <p>New arrivals, private sale invitations and styling notes from Michal.</p>
+      <form id="newsForm">
+        <input type="email" placeholder="Your email address" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="logo"><span class="mark">BRAVO</span><span class="sub">by Michal Avital</span></div>
+        <p class="about">Effortlessly chic women's clothing with coastal elegance, since 2015.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul><li><a href="#">Dresses</a></li><li><a href="#">Tops &amp; blouses</a></li><li><a href="#">Bags</a></li><li><a href="#">Accessories</a></li><li><a href="#">Sale</a></li></ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul><li><a href="#">Contact us</a></li><li><a href="#">Shipping</a></li><li><a href="#">Refund policy</a></li><li><a href="#">Photography copyright</a></li><li><a href="#">Terms of service</a></li></ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul><li>158 S. Beverly Drive</li><li>Beverly Hills, CA 90210</li><li><a href="https://maps.app.goo.gl/ZPWMWd4N5RVzx9r58">Google Maps</a></li><li><a href="https://www.instagram.com/bravomalibu/">Instagram</a></li></ul>
+      </div>
+    </div>
+    <div class="fbottom">
+      <span>© 2026 Bravo Michal Avital</span>
+      <div class="pay"><span>Amex</span><span>Diners</span><span>Discover</span><span>Mastercard</span><span>PayPal</span><span>Shop Pay</span><span>Venmo</span><span>Visa</span></div>
+    </div>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet-search" aria-hidden="true" role="dialog" aria-label="Search">
+  <div class="sbg" data-sheet-close></div>
+  <div class="sheet-panel">
+    <div class="grab"></div>
+    <div class="sheet-head"><h3>Search</h3><button class="x" data-sheet-close aria-label="Close">×</button></div>
+    <div class="sheet-body"><label class="search-field"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="searchInput" type="search" placeholder="Search blouses, jeans, bags" aria-label="Search products" enterkeyhint="search"></label>
+      <div class="chips" id="trend"><button class="chip">Button-up</button><button class="chip">Satin</button><button class="chip">Jeans</button><button class="chip">Top</button><button class="chip">Blouse</button></div>
+      <div class="s-label" id="searchLabel">Popular right now</div>
+      <div id="searchResults"></div></div>
+  </div>
+</div>
+<div class="sheet" id="sheet-cart" aria-hidden="true" role="dialog" aria-label="Your bag">
+  <div class="sbg" data-sheet-close></div>
+  <div class="sheet-panel">
+    <div class="grab"></div>
+    <div class="sheet-head"><h3>Your bag</h3><button class="x" data-sheet-close aria-label="Close">×</button></div>
+    <div class="sheet-body"><div id="cartBody"></div></div>
+    <div class="sheet-foot"><div class="row"><span>Subtotal</span><span id="subtotal">$0.00</span></div><button class="btn-block" id="checkoutBtn" disabled>Check out</button></div>
+  </div>
+</div>
+<div class="sheet" id="sheet-wish" aria-hidden="true" role="dialog" aria-label="Wishlist">
+  <div class="sbg" data-sheet-close></div>
+  <div class="sheet-panel">
+    <div class="grab"></div>
+    <div class="sheet-head"><h3>Wishlist</h3><button class="x" data-sheet-close aria-label="Close">×</button></div>
+    <div class="sheet-body"><div id="wishBody"></div></div>
+  </div>
+</div>
+<div class="sheet" id="sheet-shop" aria-hidden="true" role="dialog" aria-label="Shop">
+  <div class="sbg" data-sheet-close></div>
+  <div class="sheet-panel">
+    <div class="grab"></div>
+    <div class="sheet-head"><h3>Shop</h3><button class="x" data-sheet-close aria-label="Close">×</button></div>
+    <div class="sheet-body"><div class="shop-list">
+      <a href="#new" data-sheet-close>New in</a><a href="#cats" data-sheet-close>Dresses</a><a href="#cats" data-sheet-close>Tops</a><a href="#cats" data-sheet-close>Blouses</a><a href="#cats" data-sheet-close>Basics</a><a href="#cats" data-sheet-close>Bottoms</a><a href="#cats" data-sheet-close>Jackets</a><a href="#cats" data-sheet-close>Intimates</a><a href="#bag" data-sheet-close>The Famous Bag</a><a href="#cats" data-sheet-close>Bags</a><a href="#cats" data-sheet-close>Accessories</a><a href="#cats" data-sheet-close>Gifts</a><a href="#cats" data-sheet-close>Sale</a><a href="#story" data-sheet-close>Who we are</a><a href="#visit" data-sheet-close>Contact us</a>
+    </div></div>
+  </div>
+</div>
+<div class="sheet" id="sheet-qv" aria-hidden="true" role="dialog" aria-label="Quick view">
+  <div class="sbg" data-sheet-close></div>
+  <div class="sheet-panel">
+    <div class="grab"></div>
+    <div class="sheet-head"><h3>Quick view</h3><button class="x" data-sheet-close aria-label="Close">×</button></div>
+    <div class="sheet-body"><div id="qvBody"></div></div>
+    <div class="sheet-foot"><button class="btn-block" id="qvAdd">Add to bag</button></div>
+  </div>
+</div>
+<nav class="tabbar" aria-label="App navigation">
+  <button class="on" data-tab-go="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
+  <button data-sheet="shop"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Shop</button>
+  <button data-sheet="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</button>
+  <button data-sheet="wish"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Wishlist<span class="badge" id="tabWish" hidden>0</span></button>
+  <button data-sheet="cart"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Bag<span class="badge" id="tabCart" hidden>0</span></button>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const CDN = "https://bravomalibu.com/cdn/shop/files/";
+const G = [
+  "1_2e6edc64-213d-4fa8-8b5b-a57d6aab7bf6.webp?v=1728376326",
+  "2_366c3b06-b302-4c45-814c-650eeb9ad0fe.webp?v=1728378355",
+  "3.webp?v=1728378368","4.webp?v=1728378380","5.webp?v=1728378401",
+  "6.webp?v=1728378415","7.webp?v=1728378441","8.webp?v=1728378455",
+  "9.webp?v=1728378468","10.webp?v=1728378539","11.webp?v=1728378552",
+  "12.webp?v=1728378564"
+];
+const DRIVE = ["1Ny3D2p0nAIHs_40cCm-VkvHzSfx9gkRp", "1L7w7E2d8glqRBA3OxErxFfVCLqkvszYV", "1m--t4RTtsmz-SCsuB6Y9gtPDuJRQYa3m", "1jtWOPDOBE7dbTAJPUFH6nTGtuW0jf8xe", "1UKimUsPJNSMTtQzHEuI7a-e8Jvm9P7ZK", "1_MKGbTUH7Raq3lCSltAreRZIRGfjySQo", "19BxLAueA1bIP1WYpDjposYPqjVg0W2TV", "1rThIbC-MyhFW7M-7XNg5wtFEZCMQUmxW", "1wzHkvJdsqyJfehaCgiKE8OPuNQalSRxU", "1YAiWx9MBKJapQmUhzIh1aNYHhPaatG4b", "1NlEjsGBsqf8xJ9K5C_23kPMNOREl7Xh0", "1k9vfydplHZdwdAfyjj1xrUyR_YgltzRQ", "12Yzsl431A0ll7Q9wIhaSUYjFpKPBsQT-", "1xsvGHO0y4MLJVdMbIL9_wmS0s8tNksaj", "1EvAn8Eq4-ZOViEm3_NEt8w7KFLvH0nPp", "1ryLWLZd16D1nFzicsaEeiWS56zYxkRw3", "1LWT3iG2QDrLlIhAvrHiAFlv0h1X7o06R", "1441cWlvgh6s7ZkaF_EMJ0XWbxL9-5cZ6", "1RYsrqr4rpyLJ2xeExZsqMM5GJY8W4B14", "1Ml8c8N9PjrRtmkJgp8GEWBoOgeJbBsrv", "1hcPHezCZEDYPdGHHaZt67oyK-Km7MzX8", "1yjolsBAphGIYLf4I6cPbeoKAI8cygLjt", "1gnrV8mXs2xFBu4dnu_hOcEUX3e9IxgPA", "1sirLyHGgR2MX84FZwa4TklR2pDTP9dkC", "1h07TLWGSlwJtGeOfZamGD2-7qTK19c9I", "1KdoqS_uoOmH59AGb7CmPhNeEj9UC6tu1", "1YoStEQ6aMqoGBpdQhKZqWNPZfgkfBbAq", "1KWWAtiK7dOAGTwGgDSf_gRsl68-aicqs", "1LxJObJxWO0Fbpk9w2mpy2Z1L5nGBwD8N", "1v7p1GXTWlTodgKl_nqpTkVFTgdXf7rnT", "1dvvyt47br0iMxg97FWF43SnSgotHCV2g", "14aM6eC2Ipb0S801wcv93EBx0dkZfRGke", "15OT7LpJ8iYGkQNGRsBq9BqIsiFpHKRtK", "11SshdWydGJ23mEljp8uJq9IFWqANA0YX", "14YiwgrR__7lVECfQccrnRRgLqfhYP2RX", "1W71CDc143Bh0xsvvlPRl8OD__EDM28y-", "1xrfB8DRxeev4VEMTpKsvgsSmM3fCkela", "1zYtyXSDvTBdo_qpW4SIsrB9Zf7afCkSR", "1v7IQ319JCIk-l6EyNg0ILBQZYmHQKloA", "1rBrc2J9fabKj2HfAtvmbu78_gJL3FfGz", "1AQNZtE88l_hujPHgHok_bVDj3bhKt_0q", "10wHUPItSeLMw3udKa2kPZ-b4M43fO4Xx", "1hCsk_cnH37vrTd-io6gfscecdQeOTAza", "1bFnSwpucp8n5xjvyQfoCsSmcLez5srjt", "1u6dfOqXm27Tdh_BwrRjXzo1tGcqzbOJz", "1QpQ5Jk7shTualKbV8u5Lrla7w2EWgxyC", "1MHG9E9o9GuftGOf5th-0O_zRDY1SMVJ1"];
+const dimg = (i,w=900) => "https://lh3.googleusercontent.com/d/" + DRIVE[i % DRIVE.length] + "=w" + w;
+const DERR = "driveErr(this)";
+const img = (i,w=800) => CDN + G[i % G.length] + "&width=" + w;
+const FB = "this.parentNode.classList.add('img-fallback');this.style.visibility='hidden'";
+
+const products = [
+  {n:"Meadow Breeze Blouse", p:180, c:"blouses", tag:"New"},
+  {n:"Embroidered Button-Down Shirt", p:255, c:"blouses"},
+  {n:"Blanco Blvd Jeans", p:160, c:"bottoms", tag:"Bestseller"},
+  {n:"The Jeanius Top", p:125, c:"tops"},
+  {n:"The Plaid Diamond Button-Up", p:180, c:"blouses"},
+  {n:"The “Boho Luxe” Button-Up", p:180, c:"blouses", tag:"New"},
+  {n:"The Fine-Lined Blue Cropped Button-Up", p:185, c:"blouses"},
+  {n:"Palm Drive Ruched Shoulder Top", p:125, c:"tops"},
+  {n:"Satin Halter Top", p:180, c:"tops", tag:"Bestseller"}
+];
+
+const heart = '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+const eye = '<svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+
+const wished = new Set();
+const bag = new Map();
+const plus = '<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
+
+function card(pr, i){
+  const tag = pr.tag ? `<span class="tag ${pr.tag==='New'?'new':''}">${pr.tag}</span>` : "";
+  return `<article class="card">
+    <div class="media">
+      ${tag}
+      <img class="main" src="${dimg(9+i)}" alt="${pr.n}" loading="lazy" onerror="${DERR}">
+      <img class="alt" src="${dimg(18+i)}" alt="" loading="lazy" onerror="this.remove()">
+      <div class="tools">
+        <button aria-label="Add ${pr.n} to wishlist" data-wish="${i}" class="${wished.has(i)?'on':''}">${heart}</button>
+        <button aria-label="Quick view ${pr.n}" data-qv="${i}">${eye}</button>
+      </div>
+      <button class="add" data-add="${i}" aria-label="Add ${pr.n} to bag"><span class="t">Add to bag</span>${plus}</button>
+    </div>
+    <div class="info">
+      <div class="brand">Bravo Malibu</div>
+      <h3><a href="#" data-qv="${i}">${pr.n}</a></h3>
+      <div class="price">$${pr.p.toFixed(2)}</div>
+    </div>
+  </article>`;
+}
+
+document.getElementById("popular").innerHTML = products.map(card).join("");
+
+function renderArrivals(filter){
+  const list = products.map((p,i)=>({...p,i})).filter(p=>filter==="all"||p.c===filter).slice(0,8);
+  document.getElementById("arrivals").innerHTML = list.map(p=>card(p,p.i)).join("");
+}
+renderArrivals("all");
+
+document.querySelectorAll(".tabs button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true");
+    renderArrivals(b.dataset.tab);
+  });
+});
+
+const cats = [["Dresses",4],["Tops",5],["Blouses",6],["Bags",7],["Accessories",8]];
+document.getElementById("catGrid").innerHTML = cats.map(([t,i])=>`
+  <a class="cat" href="#"><div class="ph"><img src="${dimg(i,700)}" alt="${t}" loading="lazy" onerror="${DERR}"></div><h3>${t}</h3><small>Shop now</small></a>`).join("");
+
+document.getElementById("gallery").innerHTML = G.map((_,i)=>`
+  <a href="https://www.instagram.com/bravomalibu/" aria-label="Bravo Malibu on Instagram, photo ${i+1}"><img src="${img(i,500)}" alt="" loading="lazy" onerror="${FB}"></a>`).join("");
+
+const LB = DRIVE.slice(30);
+let lbShown = 0;
+function moreLooks(n){
+  const g = document.getElementById("lookbookGrid");
+  g.insertAdjacentHTML("beforeend", LB.slice(lbShown, lbShown+n).map((id,k)=>`<a href="#" aria-label="Look ${lbShown+k+1}"><img src="https://lh3.googleusercontent.com/d/${id}=w700" alt="Bravo look ${lbShown+k+1}" loading="lazy" onerror="${DERR}"></a>`).join(""));
+  lbShown += n;
+  if(lbShown >= LB.length) document.getElementById("lbMore").style.display = "none";
+}
+moreLooks(8);
+document.getElementById("lbMore").addEventListener("click",()=>moreLooks(9));
+
+const phrases = ["Malibu ease, Italian craft","Personal styling by appointment","Beverly Hills boutique","Since 2015"];
+document.getElementById("marquee").innerHTML = [...phrases,...phrases,...phrases,...phrases].map(p=>`<span>${p}</span>`).join("");
+
+/* carousel arrows */
+const pop = document.getElementById("popular");
+document.querySelectorAll("[data-scroll]").forEach(b=>b.addEventListener("click",()=>{
+  pop.scrollBy({left: pop.clientWidth * 0.75 * Number(b.dataset.scroll)});
+}));
+
+/* cart + wishlist */
+const toast = document.getElementById("toast");
+let tt;
+function showToast(msg){toast.textContent = msg;toast.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("show"),2200);}
+const money = n => "$" + n.toFixed(2);
+const thumb = i => `<div class="th"><img src="${dimg(9+i,300)}" alt="" onerror="${DERR}"></div>`;
+function setBadge(id,n){const el=document.getElementById(id);if(!el)return;el.textContent=n;el.hidden=!n;el.classList.remove("bump");void el.offsetWidth;el.classList.add("bump");}
+function haptic(){ if(navigator.vibrate) navigator.vibrate(12); }
+
+function addToBag(i,size){
+  const key = i + "|" + (size||"M");
+  bag.set(key,(bag.get(key)||0)+1);
+  renderCart(); haptic();
+  showToast(products[i].n + " added to your bag");
+}
+function renderCart(){
+  let count=0,total=0,html="";
+  bag.forEach((q,key)=>{const [i,sz]=key.split("|");const pr=products[i];count+=q;total+=q*pr.p;
+    html+=`<div class="li">${thumb(+i)}<div class="meta"><b>${pr.n}</b><span>Size ${sz}</span><span style="display:block;color:var(--ink)">${money(pr.p)}</span></div><div class="qty"><button data-q="${key}" data-d="-1" aria-label="Remove one">−</button><span>${q}</span><button data-q="${key}" data-d="1" aria-label="Add one">+</button></div></div>`;});
+  document.getElementById("cartBody").innerHTML = html || `<div class="empty"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b>Your bag is empty</b>Tap + on any piece to add it here.<br><br><button class="btn dark" data-sheet-close data-goto="#new">Shop new arrivals</button></div>`;
+  document.getElementById("subtotal").textContent = money(total);
+  document.getElementById("checkoutBtn").disabled = !count;
+  setBadge("cartCount",count); setBadge("tabCart",count);
+}
+function renderWish(){
+  const html=[...wished].map(i=>`<div class="li">${thumb(i)}<div class="meta"><b>${products[i].n}</b><span>${money(products[i].p)}</span></div><button class="qty" style="padding:0 14px;height:34px;font-size:13px" data-add="${i}">Add</button></div>`).join("");
+  document.getElementById("wishBody").innerHTML = html || `<div class="empty"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><b>No saved pieces yet</b>Tap the heart on anything you love.</div>`;
+  setBadge("wishCount",wished.size); setBadge("tabWish",wished.size);
+}
+let qvIndex=0, qvSize="M";
+function openQV(i){
+  qvIndex=i; qvSize="M"; const pr=products[i];
+  document.getElementById("qvBody").innerHTML = `<div class="qv-imgs"><img src="${dimg(9+i)}" alt="${pr.n}" onerror="${DERR}"><img src="${dimg(18+i)}" alt="" onerror="${DERR}"></div>
+    <div class="qv-name">${pr.n}</div><div class="qv-price">${money(pr.p)}</div>
+    <div class="s-label">Size</div><div class="sizes">${["XS","S","M","L","XL"].map(z=>`<button class="${z==="M"?"on":""}" data-size="${z}">${z}</button>`).join("")}</div>`;
+  openSheet("qv");
+}
+
+document.addEventListener("click",e=>{
+  const add = e.target.closest("[data-add]");
+  if(add){e.preventDefault();addToBag(Number(add.dataset.add));return;}
+  const w = e.target.closest("[data-wish]");
+  if(w){const i=Number(w.dataset.wish);wished.has(i)?wished.delete(i):wished.add(i);
+    document.querySelectorAll(`[data-wish="${i}"]`).forEach(b=>b.classList.toggle("on",wished.has(i)));
+    haptic();renderWish();return;}
+  const qv = e.target.closest("[data-qv]");
+  if(qv){e.preventDefault();openQV(Number(qv.dataset.qv));return;}
+  const q = e.target.closest("[data-q]");
+  if(q){const k=q.dataset.q,n=(bag.get(k)||0)+Number(q.dataset.d);n>0?bag.set(k,n):bag.delete(k);renderCart();return;}
+  const sz = e.target.closest("[data-size]");
+  if(sz){qvSize=sz.dataset.size;sz.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===sz));return;}
+});
+document.getElementById("qvAdd").addEventListener("click",()=>{addToBag(qvIndex,qvSize);closeSheets();});
+document.getElementById("checkoutBtn").addEventListener("click",()=>showToast("Checkout opens in Shopify on the live site"));
+
+/* ---------- sheets ---------- */
+const tabBtns=[...document.querySelectorAll(".tabbar button")];
+function setTab(name){tabBtns.forEach(b=>b.classList.toggle("on",(b.dataset.sheet||b.dataset.tabGo)===name));}
+function openSheet(name){
+  closeSheets(true);
+  const sh=document.getElementById("sheet-"+name); if(!sh) return;
+  if(name==="cart") renderCart(); if(name==="wish") renderWish(); if(name==="search") runSearch("");
+  sh.classList.add("open"); sh.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  if(["shop","search","wish","cart"].includes(name)) setTab(name);
+  if(name==="search" && window.innerWidth>820) setTimeout(()=>document.getElementById("searchInput").focus(),300);
+}
+function closeSheets(silent){
+  document.querySelectorAll(".sheet.open").forEach(s=>{s.classList.remove("open");s.setAttribute("aria-hidden","true");s.querySelector(".sheet-panel").style.transform="";});
+  document.body.style.overflow="";
+  if(!silent) setTab("home");
+}
+document.addEventListener("click",e=>{
+  const o=e.target.closest("[data-sheet]"); if(o){e.preventDefault();openSheet(o.dataset.sheet);return;}
+  const c=e.target.closest("[data-sheet-close]"); if(c){closeSheets(); if(c.dataset.goto) location.hash=c.dataset.goto;}
+  const t=e.target.closest("[data-tab-go]"); if(t){closeSheets();window.scrollTo({top:0,behavior:"smooth"});}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheets();});
+
+/* swipe down to dismiss */
+document.querySelectorAll(".sheet-panel").forEach(p=>{
+  let y0=null,dy=0;
+  const start=e=>{const body=p.querySelector(".sheet-body");if(e.target.closest(".sheet-body")&&body.scrollTop>0)return;y0=e.touches[0].clientY;dy=0;p.classList.add("dragging");};
+  const move=e=>{if(y0===null)return;dy=Math.max(0,e.touches[0].clientY-y0);if(dy>0){p.style.transform=`translateY(${dy}px)`;}};
+  const end=()=>{if(y0===null)return;p.classList.remove("dragging");if(dy>110)closeSheets();else p.style.transform="";y0=null;};
+  p.addEventListener("touchstart",start,{passive:true});p.addEventListener("touchmove",move,{passive:true});p.addEventListener("touchend",end);
+});
+
+/* search */
+function runSearch(q){
+  q=q.trim().toLowerCase();
+  const res=products.map((p,i)=>({...p,i})).filter(p=>!q||p.n.toLowerCase().includes(q)||p.c.includes(q));
+  document.getElementById("searchLabel").textContent = q ? `${res.length} result${res.length===1?"":"s"} for “${q}”` : "Popular right now";
+  document.getElementById("searchResults").innerHTML = res.length ? res.map(p=>`<a href="#" class="li" data-qv="${p.i}">${thumb(p.i)}<div class="meta"><b>${p.n}</b><span>${money(p.p)}</span></div></a>`).join("") : `<div class="empty"><b>No matches</b>Try “blouse”, “jeans” or “top”.</div>`;
+}
+document.getElementById("searchInput").addEventListener("input",e=>runSearch(e.target.value));
+document.getElementById("trend").addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;const inp=document.getElementById("searchInput");inp.value=c.textContent;runSearch(c.textContent);});
+
+/* stories row */
+const storyItems=[["New in",9,"#new"],["Dresses",4,"#cats"],["Tops",5,"#cats"],["Blouses",6,"#cats"],["Famous Bag",7,"#bag"],["Lookbook",30,"#lookbook"],["Accessories",8,"#cats"],["Visit us",28,"#visit"]];
+document.getElementById("stories").innerHTML = storyItems.map(([t,i,h])=>`<a class="story-c" href="${h}"><div class="ring"><span><img src="${dimg(i,200)}" alt="" onerror="${DERR}"></span></div>${t}</a>`).join("");
+document.getElementById("stories").addEventListener("click",e=>{const a=e.target.closest(".story-c");if(a)a.querySelector(".ring").classList.add("seen");});
+
+/* hero dots */
+const hero=document.querySelector(".hero"), dots=document.getElementById("heroDots");
+dots.innerHTML=[...hero.children].map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("");
+hero.addEventListener("scroll",()=>{const w=hero.children[0].offsetWidth+10;const k=Math.round(hero.scrollLeft/w);[...dots.children].forEach((d,j)=>d.classList.toggle("on",j===k));},{passive:true});
+
+/* hide header on scroll down (mobile) */
+const hdr=document.querySelector("header.site"); let lastY=0;
+window.addEventListener("scroll",()=>{const y=window.scrollY;if(window.innerWidth<=820){hdr.classList.toggle("hide",y>lastY&&y>120);}lastY=y;},{passive:true});
+
+/* footer accordion */
+document.querySelectorAll(".fgrid > div + div h4").forEach(h=>h.addEventListener("click",()=>{if(window.innerWidth<=820)h.parentNode.classList.toggle("open");}));
+
+renderCart(); renderWish();
+
+/* drawer */
+const drawer = document.getElementById("drawer");
+document.getElementById("openDrawer").addEventListener("click",()=>{drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");});
+drawer.querySelectorAll("[data-close]").forEach(el=>el.addEventListener("click",()=>{drawer.classList.remove("open");drawer.setAttribute("aria-hidden","true");}));
+
+/* forms */
+document.getElementById("contactForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const em = document.getElementById("e");
+  document.getElementById("formMsg").textContent = em.value.includes("@") ? "Message sent. We'll get back to you within one business day." : "Enter an email address so we can reply.";
+});
+document.getElementById("newsForm").addEventListener("submit",e=>{e.preventDefault();showToast("You're subscribed to the Bravo list");e.target.reset();});
+</script>
+</body>
+</html>
