@@ -234,6 +234,7 @@ section.block{padding:clamp(56px,7vw,96px) 0}
 .lookbook img{width:100%;height:auto;transition:transform .8s ease}
 .lookbook a:hover img{transform:scale(1.03)}
 .lb-more{display:flex;justify-content:center;margin-top:28px}
+.swipe-bar{display:none}
 
 /* ---------- Visit + contact ---------- */
 .visit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px)}
@@ -402,7 +403,6 @@ html{-webkit-tap-highlight-color:transparent}
   .card .brand{display:none}
   .card h3{font-size:13.5px}
   .card .price{font-size:13.5px}
-  .grid4{gap:22px 12px}
 
   /* sticky pill tabs */
   .tabs{position:sticky;top:0;z-index:20;background:#fff;border:0;gap:8px;margin:0 calc(-1 * var(--gut)) 18px;padding:10px var(--gut);scrollbar-width:none}
@@ -414,7 +414,6 @@ html{-webkit-tap-highlight-color:transparent}
   .split .img{aspect-ratio:1}
   .split .txt{padding:30px 24px 34px}
   .split .txt h2{font-size:42px}
-  .duo{gap:12px}
   .duo a{border-radius:18px;aspect-ratio:4/5}
   .duo .lbl{padding:22px}
   .btn{border-radius:12px;padding:15px 26px}
@@ -422,10 +421,26 @@ html{-webkit-tap-highlight-color:transparent}
   .story-imgs img{border-radius:16px}
   .story-imgs img + img{border-radius:16px}
   .step .n{font-size:42px}
-  .lookbook{columns:2;column-gap:8px}
-  .lookbook a{margin-bottom:8px;border-radius:12px}
-  .lb-more .btn{width:100%;text-align:center}
-  .gallery{grid-template-columns:repeat(3,1fr);gap:2px}
+
+  /* long sections become app-style swipe rows */
+  .grid4,.duo,.steps,.lookbook,.gallery{display:grid;grid-auto-flow:column;grid-template-columns:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .grid4::-webkit-scrollbar,.duo::-webkit-scrollbar,.steps::-webkit-scrollbar,.lookbook::-webkit-scrollbar,.gallery::-webkit-scrollbar{display:none}
+  .grid4,.steps,.lookbook{margin:0 calc(-1 * var(--gut));padding:0 var(--gut);scroll-padding:0 var(--gut)}
+  .grid4 > *,.duo > a,.step,.lookbook a,.gallery a{scroll-snap-align:start}
+  .grid4{grid-auto-columns:calc(50vw - 22px);gap:12px}
+  .duo{grid-auto-columns:82vw;gap:12px;scroll-padding:0 var(--gut)}
+  .steps{grid-auto-columns:76vw;gap:12px;border-top:0}
+  .step,.step + .step{padding:22px 20px;border:1px solid var(--stone);border-radius:16px}
+  .lookbook{columns:auto;grid-auto-columns:62vw;gap:10px}
+  .lookbook a{margin:0;border-radius:14px}
+  .lookbook img{height:100%;aspect-ratio:3/4;object-fit:cover}
+  .lb-more{display:none}
+  .gallery{grid-template-rows:repeat(2,auto);grid-auto-columns:36vw;gap:2px}
+
+  /* swipe progress indicator */
+  .swipe-bar{display:block;position:relative;width:min(120px,30vw);height:2px;margin:16px auto 0;background:var(--stone);border-radius:2px;overflow:hidden}
+  .swipe-bar[hidden]{display:none}
+  .swipe-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink);border-radius:2px;transition:transform .1s linear}
 
   form.contact input,form.contact textarea{font-size:16px}
   .news form{border:0;flex-direction:column;gap:10px}
@@ -642,8 +657,8 @@ function driveErr(el){
   <!-- DUO BANNERS -->
   <section class="block" style="padding-top:0">
     <div class="wrap duo">
-      <a href="#"><img src="https://bravomalibu.com/cdn/shop/files/1.webp?v=1727695471&width=1200" alt="Italian-made essentials" onerror="this.parentNode.classList.add('img-fallback');this.remove()"><div class="lbl"><h3>Italian craft,<br>coastal ease</h3><span>Shop the edit</span></div></a>
-      <a href="#"><img src="https://bravomalibu.com/cdn/shop/files/2.webp?v=1727695551&width=1200" alt="Gifts" onerror="this.parentNode.classList.add('img-fallback');this.remove()"><div class="lbl"><h3>Gifts she'll<br>actually wear</h3><span>Shop gifts</span></div></a>
+      <a href="#"><img src="https://lh3.googleusercontent.com/d/1LxJObJxWO0Fbpk9w2mpy2Z1L5nGBwD8N=w1200" alt="Italian-made essentials" onerror="driveErr(this)"><div class="lbl"><h3>Italian craft,<br>coastal ease</h3><span>Shop the edit</span></div></a>
+      <a href="#"><img src="https://lh3.googleusercontent.com/d/1v7p1GXTWlTodgKl_nqpTkVFTgdXf7rnT=w1200" alt="Gifts" onerror="driveErr(this)"><div class="lbl"><h3>Gifts she'll<br>actually wear</h3><span>Shop gifts</span></div></a>
     </div>
   </section>
 
@@ -651,8 +666,8 @@ function driveErr(el){
   <section class="block story" id="story">
     <div class="wrap story-grid">
       <div class="story-imgs">
-        <img src="https://lh3.googleusercontent.com/d/1LxJObJxWO0Fbpk9w2mpy2Z1L5nGBwD8N=w1000" alt="Michal Avital styling" onerror="driveErr(this)">
-        <img src="https://lh3.googleusercontent.com/d/1v7p1GXTWlTodgKl_nqpTkVFTgdXf7rnT=w800" alt="Bravo boutique detail" onerror="driveErr(this)">
+        <img src="https://bravomalibu.com/cdn/shop/files/1.webp?v=1727695471&width=1000" alt="Michal Avital styling" onerror="this.style.visibility='hidden'">
+        <img src="https://bravomalibu.com/cdn/shop/files/2.webp?v=1727695551&width=800" alt="Bravo boutique detail" onerror="this.style.visibility='hidden'">
       </div>
       <div>
         <h2 class="sec-head" style="display:block;margin-bottom:22px"><span style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,48px)">Our story</span></h2>
@@ -879,7 +894,9 @@ document.getElementById("popular").innerHTML = products.map(card).join("");
 
 function renderArrivals(filter){
   const list = products.map((p,i)=>({...p,i})).filter(p=>filter==="all"||p.c===filter).slice(0,8);
-  document.getElementById("arrivals").innerHTML = list.map(p=>card(p,p.i)).join("");
+  const el = document.getElementById("arrivals");
+  el.innerHTML = list.map(p=>card(p,p.i)).join("");
+  el.scrollLeft = 0;
 }
 renderArrivals("all");
 
@@ -1029,6 +1046,30 @@ hero.addEventListener("scroll",()=>{const w=hero.children[0].offsetWidth+10;cons
 /* hide header on scroll down (mobile) */
 const hdr=document.querySelector("header.site"); let lastY=0;
 window.addEventListener("scroll",()=>{const y=window.scrollY;if(window.innerWidth<=820){hdr.classList.toggle("hide",y>lastY&&y>120);}lastY=y;},{passive:true});
+
+/* swipe rows (mobile): progress bar under each row */
+document.querySelectorAll("#catGrid, #popular, #arrivals, .duo, .steps, #lookbookGrid, #gallery").forEach(row=>{
+  const bar=document.createElement("div"); bar.className="swipe-bar"; bar.setAttribute("aria-hidden","true"); bar.innerHTML="<i></i>";
+  row.after(bar);
+  const thumb=bar.firstChild;
+  const update=()=>{
+    const over=row.scrollWidth-row.clientWidth;
+    bar.hidden = over<=2;
+    if(bar.hidden) return;
+    thumb.style.width=(row.clientWidth/row.scrollWidth*100)+"%";
+    thumb.style.transform=`translateX(${row.scrollLeft/row.clientWidth*100}%)`;
+  };
+  row.addEventListener("scroll",update,{passive:true});
+  window.addEventListener("resize",update);
+  new MutationObserver(update).observe(row,{childList:true});
+  update();
+});
+
+/* lookbook: load more looks as you swipe to the end */
+const lbGrid=document.getElementById("lookbookGrid");
+lbGrid.addEventListener("scroll",()=>{
+  if(lbShown<LB.length && lbGrid.scrollLeft+lbGrid.clientWidth*2>=lbGrid.scrollWidth) moreLooks(9);
+},{passive:true});
 
 /* footer accordion */
 document.querySelectorAll(".fgrid > div + div h4").forEach(h=>h.addEventListener("click",()=>{if(window.innerWidth<=820)h.parentNode.classList.toggle("open");}));
