@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Shop — Bravo by Michal Avital</title>
+<meta name="description" content="Shop Italian-made dresses, blouses, denim and the Famous Bag. Free shipping over $250 and free returns.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* ===== Collection page ===== */
+.col-hero{position:relative;height:min(46vh,420px);min-height:260px;overflow:hidden;background:var(--tide);color:#fff}
+.col-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85}
+.col-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,.05))}
+.col-hero .wrap{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:36px}
+.col-hero .crumbs{color:rgba(255,255,255,.75);padding:0 0 12px}
+.col-hero .crumbs a:hover,.col-hero .crumbs [aria-current]{color:#fff}
+.col-hero .crumbs li + li::before{color:rgba(255,255,255,.5)}
+.col-hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(36px,5vw,68px);line-height:1}
+.col-hero p{max-width:52ch;opacity:.9;margin-top:10px}
+
+/* sub-category pills */
+.subcats{display:flex;gap:10px;overflow-x:auto;padding:18px 0;scrollbar-width:none;border-bottom:1px solid var(--stone)}
+.subcats::-webkit-scrollbar{display:none}
+.subcats a{flex:none;display:flex;align-items:center;gap:10px;border:1px solid var(--stone);padding:6px 14px 6px 6px;border-radius:999px;font-size:13.5px;transition:.2s}
+.subcats a img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+.subcats a:hover,.subcats a.on{border-color:var(--ink);background:var(--ink);color:#fff}
+
+/* toolbar */
+.toolbar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--stone)}
+.toolbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+.toolbar .count{font-size:13.5px;color:var(--muted)}
+.toolbar .right{display:flex;gap:10px;align-items:center}
+.tool-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--stone);padding:9px 14px;font-size:13.5px;background:#fff}
+.tool-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
+.tool-btn select{border:0;background:transparent;font:inherit;padding:0;outline:none;cursor:pointer}
+.tool-btn.filt{display:none}
+.view-tog{display:flex;border:1px solid var(--stone)}
+.view-tog button{width:38px;height:38px;display:grid;place-items:center;color:var(--muted)}
+.view-tog button.on{color:var(--ink);background:var(--mist)}
+.view-tog svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+/* layout */
+.col-layout{display:grid;grid-template-columns:240px 1fr;gap:clamp(28px,4vw,64px);padding:32px 0 60px}
+aside.filters{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;scrollbar-width:thin}
+.fgroup{border-bottom:1px solid var(--stone);padding:4px 0}
+.fgroup summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-weight:500;font-size:14px;cursor:pointer}
+.fgroup summary::-webkit-details-marker{display:none}
+.fgroup summary::after{content:"+";font-size:20px;font-weight:300}
+.fgroup[open] summary::after{content:"−"}
+.fgroup .opts{padding:0 0 16px;display:grid;gap:9px;font-size:14px}
+.fgroup label{display:flex;align-items:center;gap:10px;cursor:pointer;color:#3c3c3c}
+.fgroup label:hover{color:var(--ink)}
+.fgroup input[type=checkbox]{appearance:none;width:16px;height:16px;border:1px solid #bbb;display:grid;place-items:center;flex:none}
+.fgroup input[type=checkbox]:checked{background:var(--ink);border-color:var(--ink)}
+.fgroup input[type=checkbox]:checked::after{content:"";width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-1px)}
+.fgroup label small{margin-left:auto;color:var(--muted)}
+.fsizes{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 16px}
+.fsizes button{border:1px solid var(--stone);padding:8px 0;min-width:46px;font-size:13.5px}
+.fsizes button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fcolors{display:flex;flex-wrap:wrap;gap:10px;padding:0 0 16px}
+.fcolors button{width:26px;height:26px;border-radius:50%;border:1px solid rgba(0,0,0,.12);padding:2px;background:#fff}
+.fcolors button span{display:block;width:100%;height:100%;border-radius:50%}
+.fcolors button.on{border-color:var(--ink)}
+.range{padding:0 0 16px}
+.range input{width:100%;accent-color:var(--ink)}
+.range .v{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:6px}
+.f-clear{font-size:13px;color:var(--muted);border-bottom:1px solid currentColor;margin:16px 0 0;display:inline-block}
+.f-promo{background:var(--mist);padding:18px;margin-top:22px;font-size:13.5px}
+.f-promo b{display:block;font-family:var(--serif);font-weight:400;font-size:20px;margin-bottom:6px}
+
+/* active chips */
+.active{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;min-height:0}
+.active .chip{display:flex;align-items:center;gap:8px;padding:6px 10px 6px 14px;background:var(--mist);border-color:transparent}
+.active .chip b{font-weight:400;color:var(--muted)}
+.active .chip span{font-size:16px;line-height:1}
+
+/* grid + editorial tile */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 24px}
+.pgrid.dense{grid-template-columns:repeat(4,1fr);gap:32px 18px}
+.edit-tile{grid-column:span 2;grid-row:span 1;position:relative;overflow:hidden;background:var(--tide);color:#fff;display:flex;align-items:flex-end;padding:32px;min-height:100%}
+.edit-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.8}
+.edit-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6),transparent 60%)}
+.edit-tile div{position:relative;z-index:2}
+.edit-tile .kick{color:rgba(255,255,255,.75)}
+.edit-tile h3{font-family:var(--serif);font-weight:400;font-size:clamp(26px,2.6vw,40px);line-height:1.05;margin-bottom:14px}
+.pgrid.dense .edit-tile{grid-column:span 2}
+.more{text-align:center;margin-top:48px}
+.more .prog{width:220px;height:2px;background:var(--stone);margin:0 auto 16px;position:relative}
+.more .prog i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.more p{font-size:13px;color:var(--muted);margin-bottom:16px}
+.noresult{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1}
+.noresult b{display:block;font-family:var(--serif);font-weight:400;font-size:28px;color:var(--ink);margin-bottom:8px}
+
+/* SEO / trust footer copy */
+.seo{columns:2 320px;column-gap:48px;color:#3c3c3c;font-size:14px;max-width:1000px}
+.seo p + p{margin-top:12px}
+
+@media(max-width:1000px){
+  .col-layout{grid-template-columns:1fr;gap:0;padding-top:20px}
+  aside.filters{display:none}
+  .tool-btn.filt{display:flex}
+  .pgrid,.pgrid.dense{grid-template-columns:repeat(2,1fr);gap:28px 14px}
+  .edit-tile,.pgrid.dense .edit-tile{grid-column:span 2;aspect-ratio:16/9;min-height:0}
+}
+@media(max-width:820px){
+  .col-hero{height:auto;min-height:0;margin:0 16px;border-radius:18px;aspect-ratio:4/3}
+  .col-hero .wrap{padding-bottom:22px}
+  .col-hero .crumbs{display:none}
+  .toolbar{top:0}
+  .toolbar .wrap{height:50px}
+  .toolbar .count{font-size:12.5px}
+  .view-tog{display:none}
+  .tool-btn{border-radius:999px;padding:8px 14px}
+  .card .media{border-radius:14px}
+  .edit-tile{border-radius:16px;padding:22px}
+  .pgrid.dense{grid-template-columns:repeat(3,1fr);gap:18px 8px}
+  .pgrid.dense .edit-tile{grid-column:span 3}
+}
+/* filter sheet shares aside markup */
+#sheet-filter .fgroup{padding:0}
+#sheet-filter .sheet-foot{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+</style>
+<script>function driveErr(el){const m=el.src.match(/\/d\/([^=]+)=/);if(m&&!el.dataset.fb){el.dataset.fb=1;el.src="https://drive.google.com/thumbnail?id="+m[1]+"&sz=w1200";return;}if(el.parentNode)el.parentNode.classList.add("img-fallback");el.style.visibility="hidden";}</script>
+</head>
+<body data-page="shop" data-tab="shop">
+<div id="chrome-top"></div>
+
+<main>
+  <!-- HERO -->
+  <section class="col-hero">
+    <img id="heroImg" src="" alt="" onerror="driveErr(this)">
+    <div class="wrap">
+      <ol class="crumbs" id="crumbs"></ol>
+      <h1 id="colTitle">Shop all</h1>
+      <p id="colDesc"></p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <nav class="subcats" id="subcats" aria-label="Categories"></nav>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="count" id="count">16 pieces</div>
+      <div class="right">
+        <button class="tool-btn filt" data-sheet="filter"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filter <span id="fCount"></span></button>
+        <label class="tool-btn"><svg viewBox="0 0 24 24"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><select id="sort" aria-label="Sort by">
+          <option value="featured">Featured</option>
+          <option value="new">Newest</option>
+          <option value="best">Best selling</option>
+          <option value="rating">Top rated</option>
+          <option value="asc">Price: low to high</option>
+          <option value="desc">Price: high to low</option>
+        </select></label>
+        <div class="view-tog" role="group" aria-label="Grid density">
+          <button class="on" data-view="3" aria-label="3 per row"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16"/><rect x="9.5" y="4" width="5" height="16"/><rect x="16" y="4" width="5" height="16"/></svg></button>
+          <button data-view="4" aria-label="4 per row"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="4" height="16"/><rect x="7" y="4" width="4" height="16"/><rect x="12" y="4" width="4" height="16"/><rect x="17" y="4" width="4" height="16"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap col-layout">
+    <!-- FILTERS (desktop) -->
+    <aside class="filters" id="filters">
+      <template id="filterTpl">
+        <details class="fgroup" open><summary>Category</summary><div class="opts" data-f="c">
+          <label><input type="checkbox" value="dresses">Dresses<small>2</small></label>
+          <label><input type="checkbox" value="blouses">Blouses<small>5</small></label>
+          <label><input type="checkbox" value="tops">Tops<small>3</small></label>
+          <label><input type="checkbox" value="bottoms">Bottoms<small>2</small></label>
+          <label><input type="checkbox" value="jackets">Jackets<small>1</small></label>
+          <label><input type="checkbox" value="bags">Bags<small>1</small></label>
+          <label><input type="checkbox" value="accessories">Accessories<small>1</small></label>
+          <label><input type="checkbox" value="basics">Basics<small>1</small></label>
+        </div></details>
+        <details class="fgroup" open><summary>Size</summary><div class="fsizes" data-f="size"><button>XS</button><button>S</button><button>M</button><button>L</button><button>XL</button></div></details>
+        <details class="fgroup" open><summary>Color</summary><div class="fcolors" data-f="col">
+          <button aria-label="Ivory" value="#e9e2d3"><span style="background:#e9e2d3"></span></button>
+          <button aria-label="White" value="#fff"><span style="background:#fff"></span></button>
+          <button aria-label="Black" value="#000"><span style="background:#000"></span></button>
+          <button aria-label="Famous blue" value="#24435a"><span style="background:#24435a"></span></button>
+          <button aria-label="Sky" value="#c9d7e1"><span style="background:#c9d7e1"></span></button>
+          <button aria-label="Sand" value="#c9a98b"><span style="background:#c9a98b"></span></button>
+          <button aria-label="Gold" value="#d4af37"><span style="background:#d4af37"></span></button>
+        </div></details>
+        <details class="fgroup" open><summary>Price</summary><div class="range"><input type="range" min="50" max="350" step="10" value="350" data-f="max" aria-label="Maximum price"><div class="v"><span>$50</span><span>Up to <b class="maxv">$350</b></span></div></div></details>
+        <details class="fgroup"><summary>Availability</summary><div class="opts" data-f="tag">
+          <label><input type="checkbox" value="New">New arrivals</label>
+          <label><input type="checkbox" value="Bestseller">Bestsellers</label>
+        </div></details>
+      </template>
+      <div id="filterHost"></div>
+      <button class="f-clear" id="clearAll">Clear all filters</button>
+      <div class="f-promo"><b>Styling by appointment</b>Bring your shortlist to Beverly Drive and try it all together.<br><a class="link-u" href="contact.html#book" style="display:inline-block;margin-top:10px">Book a session</a></div>
+    </aside>
+
+    <!-- RESULTS -->
+    <div>
+      <div class="active" id="active"></div>
+      <div class="pgrid" id="grid"></div>
+      <div class="more" id="more">
+        <div class="prog"><i id="prog"></i></div>
+        <p id="progTxt"></p>
+        <button class="btn ghost" id="loadMore">Load more</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST -->
+  <div class="trust"><div class="wrap">
+    <div><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><b>Free shipping over $250</b><span>Dispatched from Beverly Hills</span></div></div>
+    <div><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v5h5"/></svg><div><b>Free 14-day returns</b><span>Exchange in store any time</span></div></div>
+    <div><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.3 5.8.7-4.3 4 1.1 5.8L12 16l-5.1 2.8 1.1-5.8-4.3-4 5.8-.7z"/></svg><div><b>Made in Italy</b><span>Small-batch, hand finished</span></div></div>
+    <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><div><b>Personal styling</b><span>By appointment, in person</span></div></div>
+  </div></div>
+
+  <!-- SEO COPY -->
+  <section class="block">
+    <div class="wrap">
+      <h2 class="h-serif" style="margin-bottom:22px" id="seoTitle">About this collection</h2>
+      <div class="seo" id="seoCopy"></div>
+    </div>
+  </section>
+
+  <section class="block news">
+    <div class="wrap">
+      <h2>Join the Bravo list</h2>
+      <p>New arrivals, private sale invitations and styling notes from Michal.</p>
+      <form id="newsForm"><input type="email" placeholder="Your email address" aria-label="Email address" required><button type="submit">Subscribe</button></form>
+    </div>
+  </section>
+</main>
+
+<!-- Filter sheet (mobile) -->
+<div class="sheet" id="sheet-filter" aria-hidden="true" role="dialog" aria-label="Filter">
+  <div class="sbg" data-sheet-close></div>
+  <div class="sheet-panel"><div class="grab"></div>
+    <div class="sheet-head"><h3>Filter &amp; sort</h3><button class="x" data-sheet-close aria-label="Close">×</button></div>
+    <div class="sheet-body" id="filterHostM"></div>
+    <div class="sheet-foot"><button class="btn ghost" id="clearAllM" style="padding:14px 18px">Clear</button><button class="btn-block" data-sheet-close id="applyM">Show results</button></div>
+  </div>
+</div>
+
+<div id="chrome-bottom"></div>
+<script src="assets/chrome.js"></script>
+<script src="assets/site.js"></script>
+<script>
+/* ---------- Collection meta ---------- */
+const META = {
+  all:{t:"Shop all",d:"Every piece in the boutique, from Italian-made staples to the bag our clients ask for by name.",img:27},
+  new:{t:"New in",d:"This week's arrivals, unpacked on Beverly Drive and photographed the same morning.",img:28},
+  dresses:{t:"Dresses",d:"Linen midis, bias-cut slips and the kind of easy silhouettes that go from brunch to dinner.",img:0},
+  blouses:{t:"Blouses",d:"Button-ups and embroidered shirts in Italian cottons and silks. Our most-loved category.",img:1},
+  tops:{t:"Tops",d:"Satin halters, ruched shoulders and denim crops to build every look around.",img:5},
+  bottoms:{t:"Bottoms",d:"High-rise denim and wide-leg trousers cut to flatter and made to last.",img:4},
+  jackets:{t:"Jackets",d:"Cropped wool and relaxed layers for cool coastal evenings.",img:3},
+  bags:{t:"Bags",d:"Including the Famous Bag, in Italian leather and three signature colors.",img:2},
+  accessories:{t:"Accessories",d:"Gold vermeil pieces from Israel, where Bravo began in 2015.",img:8},
+  basics:{t:"Basics",d:"Organic cotton essentials that anchor every outfit.",img:6}
+};
+const params = new URLSearchParams(location.search);
+const catKey = META[params.get("c")] ? params.get("c") : "all";
+const meta = META[catKey];
+document.title = `${meta.t} — Bravo by Michal Avital`;
+$("colTitle").textContent = meta.t; $("colDesc").textContent = meta.d; $("heroImg").src = dimg(meta.img,1600);
+$("crumbs").innerHTML = `<li><a href="index.html">Home</a></li><li><a href="collection.html">Shop</a></li>${catKey!=="all"?`<li aria-current="page">${meta.t}</li>`:""}`;
+$("seoTitle").textContent = `${meta.t} at Bravo by Michal Avital`;
+$("seoCopy").innerHTML = `<p>${meta.d} Every piece is chosen by Michal Avital for how it fits a real day in Los Angeles: light enough for Malibu mornings, polished enough for Beverly Hills evenings.</p><p>Most of our collection is made in Italy in small runs, which means sizes sell through quickly and rarely restock in the same colour. If you see something you love, our stylists recommend ordering today and exchanging in store if the fit isn't perfect. Shipping is complimentary over $250 and returns are free for 14 days.</p><p>Prefer to try before you buy? Save your favourites with the heart icon and <a class="link-u" href="contact.html#book">book a personal styling session</a>. We'll have everything pulled and waiting in the fitting room when you arrive at 158 S. Beverly Drive.</p>`;
+
+/* sub-category pills */
+const subs = [["all","All",27],["new","New in",28],["dresses","Dresses",0],["blouses","Blouses",1],["tops","Tops",5],["bottoms","Bottoms",4],["jackets","Jackets",3],["bags","Bags",2],["accessories","Accessories",8]];
+$("subcats").innerHTML = subs.map(([k,t,i])=>`<a href="collection.html${k==="all"?"":"?c="+k}" class="${k===catKey?"on":""}"><img src="${dimg(i,120)}" alt="" onerror="${DERR}">${t}</a>`).join("");
+
+/* ---------- Filters (desktop + mobile share one template) ---------- */
+const tpl = $("filterTpl");
+$("filterHost").appendChild(tpl.content.cloneNode(true));
+$("filterHostM").appendChild(tpl.content.cloneNode(true));
+
+const state = { c:new Set(), size:new Set(), col:new Set(), tag:new Set(), max:350, sort:"featured", view:3 };
+if(catKey!=="all" && catKey!=="new") state.c.add(catKey);
+if(catKey==="new") state.tag.add("New");
+const PAGE = 9; let shown = PAGE;
+
+function syncUI(){
+  document.querySelectorAll('[data-f="c"] input').forEach(i=>i.checked=state.c.has(i.value));
+  document.querySelectorAll('[data-f="tag"] input').forEach(i=>i.checked=state.tag.has(i.value));
+  document.querySelectorAll('[data-f="size"] button').forEach(b=>b.classList.toggle("on",state.size.has(b.textContent)));
+  document.querySelectorAll('[data-f="col"] button').forEach(b=>b.classList.toggle("on",state.col.has(b.value)));
+  document.querySelectorAll('[data-f="max"]').forEach(r=>{r.value=state.max;r.closest(".range").querySelector(".maxv").textContent="$"+state.max;});
+  const n = state.c.size+state.size.size+state.col.size+state.tag.size+(state.max<350?1:0);
+  $("fCount").textContent = n?`(${n})`:"";
+}
+document.addEventListener("change",e=>{
+  const i=e.target; const g=i.closest("[data-f]"); if(!g) return;
+  const f=g.dataset.f;
+  if(f==="c"||f==="tag"){ i.checked?state[f].add(i.value):state[f].delete(i.value); }
+  if(f==="max"||i.dataset.f==="max"){ state.max=+i.value; }
+  apply();
+});
+document.addEventListener("input",e=>{ if(e.target.dataset.f==="max"){ e.target.closest(".range").querySelector(".maxv").textContent="$"+e.target.value; } });
+document.addEventListener("click",e=>{
+  const b=e.target.closest('[data-f="size"] button,[data-f="col"] button'); if(b){ const f=b.closest("[data-f]").dataset.f; const v=f==="size"?b.textContent:b.value; state[f].has(v)?state[f].delete(v):state[f].add(v); apply(); return; }
+  const rm=e.target.closest("[data-rm]"); if(rm){ const [f,v]=rm.dataset.rm.split(":"); if(f==="max") state.max=350; else state[f].delete(v); apply(); return; }
+  const v=e.target.closest("[data-view]"); if(v){ state.view=+v.dataset.view; document.querySelectorAll("[data-view]").forEach(x=>x.classList.toggle("on",x===v)); $("grid").classList.toggle("dense",state.view===4); return; }
+  if(e.target.closest("#loadMore")){ shown+=PAGE; render(); }
+});
+["clearAll","clearAllM"].forEach(id=>$(id).addEventListener("click",()=>{state.c.clear();state.size.clear();state.col.clear();state.tag.clear();state.max=350;apply();}));
+$("sort").addEventListener("change",e=>{state.sort=e.target.value;apply();});
+
+function filtered(){
+  let list = products.map((p,i)=>({...p,i}));
+  if(state.c.size) list=list.filter(p=>state.c.has(p.c));
+  if(state.tag.size) list=list.filter(p=>state.tag.has(p.tag));
+  if(state.col.size) list=list.filter(p=>(p.col||[]).some(c=>state.col.has(c)));
+  if(state.size.size) list=list.filter(p=>p.fit!=="One size" && ![...state.size].every(s=>(p.low||[]).includes(s)) );
+  list=list.filter(p=>p.p<=state.max);
+  const s=state.sort;
+  if(s==="asc") list.sort((a,b)=>a.p-b.p); if(s==="desc") list.sort((a,b)=>b.p-a.p);
+  if(s==="rating") list.sort((a,b)=>b.r-a.r||b.rc-a.rc); if(s==="best") list.sort((a,b)=>b.rc-a.rc);
+  if(s==="new") list.sort((a,b)=>(b.tag==="New")-(a.tag==="New"));
+  return list;
+}
+function renderChips(){
+  const chips=[];
+  state.c.forEach(v=>chips.push(["c",v,META[v]?.t||v]));
+  state.tag.forEach(v=>chips.push(["tag",v,v]));
+  state.size.forEach(v=>chips.push(["size",v,"Size "+v]));
+  state.col.forEach(v=>chips.push(["col",v,"Color"]));
+  if(state.max<350) chips.push(["max","","Under $"+state.max]);
+  $("active").innerHTML = chips.map(([f,v,t])=>`<button class="chip" data-rm="${f}:${v}">${f==="col"?`<i style="width:12px;height:12px;border-radius:50%;background:${v};border:1px solid rgba(0,0,0,.15)"></i>`:""}${t}<span aria-hidden="true">×</span></button>`).join("");
+}
+function render(){
+  const list=filtered();
+  const page=list.slice(0,shown);
+  let html = page.map((p,k)=>card(p,p.i) + (k===2 && page.length>4 ? editTile() : "")).join("");
+  if(!list.length) html=`<div class="noresult"><b>Nothing matches yet</b>Try removing a filter, or <a class="link-u" href="contact.html#book">ask a stylist</a> to source it for you.</div>`;
+  $("grid").innerHTML = html;
+  $("count").textContent = `${list.length} piece${list.length===1?"":"s"}`;
+  const n=Math.min(shown,list.length);
+  $("prog").style.width = (list.length? n/list.length*100 : 0)+"%";
+  $("progTxt").textContent = `Showing ${n} of ${list.length}`;
+  $("loadMore").style.display = n<list.length ? "" : "none";
+  $("more").style.display = list.length ? "" : "none";
+}
+function editTile(){
+  return `<a class="edit-tile" href="product.html?p=11"><img src="${img(4,1200)}" alt="" loading="lazy" onerror="${FB}"><div><div class="kick">Signature piece</div><h3>The Famous Bag,<br>back in Famous Blue</h3><span class="btn light">Discover it</span></div></a>`;
+}
+function apply(){ shown=PAGE; syncUI(); renderChips(); render(); }
+apply();
+</script>
+</body>
+</html>
